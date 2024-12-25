@@ -23,7 +23,8 @@ class CertificadosResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Forms\Components\TextInput::make('nombre')->required(),
+                Forms\Components\Textarea::make('descripcion'),
             ]);
     }
 
@@ -31,7 +32,8 @@ class CertificadosResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('nombre')->sortable()->searchable(),
+                Tables\Columns\TextColumn::make('descripcion')->limit(50),
             ])
             ->filters([
                 //

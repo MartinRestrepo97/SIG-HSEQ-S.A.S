@@ -14,9 +14,10 @@ return new class extends Migration
         Schema::create('clientes', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
+            $table->string('apellido');
             $table->text('cedula');
-            $table->string('email');
-            $table->string('telefono');
+            $table->string('email')->unique();
+            $table->string('telefono')->nullable();
             $table->string('codigo');
             $table->timestamps();
         });
