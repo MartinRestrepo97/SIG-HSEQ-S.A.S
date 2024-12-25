@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('certificados', function (Blueprint $table) {
             $table->id();
+            $table->string('nombre'); // Nombre del curso o certificado
+            $table->text('descripcion')->nullable();
             $table->timestamps();
         });
     }
