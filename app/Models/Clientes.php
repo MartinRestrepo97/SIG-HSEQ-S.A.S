@@ -8,11 +8,21 @@ use Illuminate\Database\Eloquent\Model;
 class Clientes extends Model
 {
     use HasFactory;
+
     protected $fillable = [
-        'nombre',
-        'cedula',
-        'email',
-        'telefono',
-        'codigo',
+        'nombre', 
+        'apellido',
+        'cedula', 
+        'email', 
+        'telefono', 
+        'codigo'
     ];
+
+    // Relación muchos a muchos con Certificado
+    public function certificados()
+    {
+        return $this->belongsToMany(certificados::class, 'certificados_clientes')
+            ->withPivot('fecha_certificacion')
+            ->withTimestamps();
+    }
 }

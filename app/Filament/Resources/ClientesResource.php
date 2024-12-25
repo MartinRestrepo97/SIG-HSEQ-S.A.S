@@ -26,12 +26,16 @@ class ClientesResource extends Resource
                 Forms\Components\TextInput::make('nombre')
                     ->required()
                     ->maxLength(255),
+                Forms\Components\TextInput::make('apellido')
+                    ->required()
+                    ->maxLength(255),
                 Forms\Components\TextInput::make('cedula')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('email')
                     ->email()
                     ->required()
+                    ->unique(ignoreRecord: true)
                     ->maxLength(255),
                 Forms\Components\TextInput::make('telefono')
                     ->required()
@@ -47,10 +51,14 @@ class ClientesResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('nombre')
+                    ->sortable()   
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('apellido')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('cedula')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('email')
+                    ->sortable()   
                     ->searchable(),
                 Tables\Columns\TextColumn::make('telefono')
                     ->searchable(),

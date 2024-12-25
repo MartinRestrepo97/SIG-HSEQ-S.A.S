@@ -12,12 +12,6 @@ class ListClientes extends ListRecords
 {
     protected static string $resource = ClientesResource::class;
 
-    public function getTabs(): array
-    {
-        return [
-            'all' => Tab::make('All clientes'),
-        ];
-    }
 
     protected function getHeaderActions(): array
     {

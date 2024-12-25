@@ -13,7 +13,9 @@ return new class extends Migration
     {
         Schema::create('certificados_clientes', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->foreignId('cliente_id')->constrained()->onDelete('cascade');
+            $table->foreignId('certificado_id')->constrained()->onDelete('cascade');
+            $table->date('fecha_certificacion')->nullable();
         });
     }
 
