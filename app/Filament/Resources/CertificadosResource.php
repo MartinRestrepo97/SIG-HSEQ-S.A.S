@@ -24,6 +24,12 @@ class CertificadosResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('nombre')->required(),
+                Forms\Components\TextInput::make('cedula')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('codigo')
+                    ->required()
+                    ->maxLength(255),
                 Forms\Components\Textarea::make('descripcion'),
                 Forms\Components\FileUpload::make('documento_pdf')
                     ->label('Documento PDF')
@@ -38,6 +44,10 @@ class CertificadosResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('nombre')->sortable()->searchable(),
+                Tables\Columns\TextColumn::make('cedula')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('codigo')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('descripcion')->limit(50),
                 Tables\Columns\TextColumn::make('documento_pdf')
                     ->label('PDF')
