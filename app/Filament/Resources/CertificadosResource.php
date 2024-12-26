@@ -25,6 +25,11 @@ class CertificadosResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('nombre')->required(),
                 Forms\Components\Textarea::make('descripcion'),
+                Forms\Components\FileUpload::make('documento_pdf')
+                    ->label('Documento PDF')
+                    ->directory('certificados_pdf') // Directorio donde se guardarán los PDFs
+                    ->preserveFilenames() // Preservar el nombre original del archivo
+                    ->acceptedFileTypes(['application/pdf']), // Aceptar solo archivos PDF
             ]);
     }
 
@@ -34,6 +39,9 @@ class CertificadosResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('nombre')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('descripcion')->limit(50),
+                Tables\Columns\TextColumn::make('documento_pdf')
+                    ->label('PDF')
+                    ->searchable(),
             ])
             ->filters([
                 //
