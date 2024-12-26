@@ -23,7 +23,8 @@ class CertificadosClientesResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Forms\Components\TextInput::make('nombre')->required(),
+                Forms\Components\Textarea::make('descripcion'),
             ]);
     }
 
@@ -31,7 +32,16 @@ class CertificadosClientesResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('nombre')->sortable()->searchable(),
+                Tables\Columns\TextColumn::make('descripcion')->limit(50),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('updated_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //

@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CertificadoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -12,6 +13,10 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+Route::get('/certificados/{clienteId}/{certificadoId}/descargar', 
+    [CertificadoController::class, 
+        'descargarCertificado'])->name('certificados.descargar');
 
 Route::get('/', function () {
     return view('welcome');
