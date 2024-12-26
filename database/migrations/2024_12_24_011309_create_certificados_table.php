@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('certificados', function (Blueprint $table) {
             $table->id();
             $table->string('nombre'); // Nombre del curso o certificado
+            $table->text('cedula');
+            $table->string('codigo');
             $table->text('descripcion')->nullable();
             $table->string('documento_pdf')->nullable(); // Campo para almacenar la ruta del PDF
             $table->timestamps();
