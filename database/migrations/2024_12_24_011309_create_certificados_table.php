@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('nombre'); // Nombre del curso o certificado
             $table->text('descripcion')->nullable();
+            $table->string('documento_pdf')->nullable(); // Campo para almacenar la ruta del PDF
             $table->timestamps();
         });
     }

@@ -11,7 +11,8 @@ class Certificados extends Model
 
     protected $fillable = [
         'nombre', 
-        'descripcion'
+        'descripcion',
+        'documento_pdf'
     ];
 
     // Relación muchos a muchos con Cliente
