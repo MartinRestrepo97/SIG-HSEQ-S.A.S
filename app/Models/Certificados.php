@@ -17,10 +17,10 @@ class Certificados extends Model
         'documento_pdf'
     ];
 
-    // Relación muchos a muchos con Cliente
+    // Relación muchos a muchos con Clientes
     public function clientes()
     {
-        return $this->belongsToMany(Cliente::class, 'certificados_clientes')
+        return $this->belongsToMany(Clientes::class, 'certificados_clientes')
             ->withPivot('fecha_certificacion')
             ->withTimestamps();
     }

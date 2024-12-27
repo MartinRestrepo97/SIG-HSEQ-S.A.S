@@ -89,7 +89,7 @@ class ClientesResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\CertificadosRelationManager::class,
         ];
     }
 
