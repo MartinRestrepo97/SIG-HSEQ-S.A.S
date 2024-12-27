@@ -10,6 +10,12 @@ class EditCertificados extends EditRecord
 {
     protected static string $resource = CertificadosResource::class;
 
+    // Sobrescribir el método para redirigir al listado después de editar
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index'); // Redirige al listado
+    }
+
     protected function getHeaderActions(): array
     {
         return [

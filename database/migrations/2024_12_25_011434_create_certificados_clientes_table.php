@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('cliente_id')->constrained()->onDelete('cascade');
             $table->foreignId('certificado_id')->constrained()->onDelete('cascade');
-            $table->date('fecha_certificacion')->nullable();
+            $table->date('fecha_certificacion')->nullable(); // Campo adicional
+            $table->timestamps();
         });
     }
 

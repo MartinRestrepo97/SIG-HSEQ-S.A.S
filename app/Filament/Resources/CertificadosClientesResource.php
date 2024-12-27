@@ -23,8 +23,17 @@ class CertificadosClientesResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('nombre')->required(),
-                Forms\Components\Textarea::make('descripcion'),
+                Forms\Components\Select::make('cliente_id')
+                    ->label('Cliente')
+                    ->relationship('clientes', 'nombre')
+                    ->required(),
+                Forms\Components\Select::make('certificado_id')
+                    ->label('Certificado')
+                    ->relationship('certificados', 'nombre')
+                    ->required(),
+                Forms\Components\DatePicker::make('fecha_certificacion')
+                    ->label('Fecha de Certificación')
+                    ->nullable(),
             ]);
     }
 
@@ -32,22 +41,25 @@ class CertificadosClientesResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('nombre')->sortable()->searchable(),
-                Tables\Columns\TextColumn::make('descripcion')->limit(50),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
+                Tables\Columns\TextColumn::make('cliente.nombre')
+                    ->label('Cliente')
                     ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('certificado.nombre')
+                    ->label('Certificado')
                     ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('fecha_certificacion')
+                    ->label('Fecha de Certificación')
+                    ->date()
+                    ->sortable(),
             ])
             ->filters([
                 //
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
