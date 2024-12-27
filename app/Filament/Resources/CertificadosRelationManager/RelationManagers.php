@@ -18,9 +18,9 @@ class CertificadosRelationManager extends RelationManager
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('nombre')
+                Forms\Components\TextInput::make('codigo')
                     ->required(),
-                Forms\Components\Textarea::make('descripcion'),
+                Forms\Components\Textarea::make('documento_pdf'),
             ]);
     }
 
@@ -28,8 +28,8 @@ class CertificadosRelationManager extends RelationManager
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('nombre'),
-                Tables\Columns\TextColumn::make('descripcion'),
+                Tables\Columns\TextColumn::make('codigo'),
+                Tables\Columns\TextColumn::make('documento_pdf'),
             ])
             ->filters([
                 //
