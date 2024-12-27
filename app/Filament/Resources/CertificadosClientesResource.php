@@ -24,12 +24,12 @@ class CertificadosClientesResource extends Resource
         return $form
             ->schema([
                 Forms\Components\Select::make('cliente_id')
-                    ->label('Cliente')
+                    ->label('Nombre')
                     ->relationship('clientes', 'nombre')
                     ->required(),
                 Forms\Components\Select::make('certificado_id')
-                    ->label('Certificado')
-                    ->relationship('certificados', 'nombre')
+                    ->label('Codigo')
+                    ->relationship('certificados', 'codigo')
                     ->required(),
                 Forms\Components\DatePicker::make('fecha_certificacion')
                     ->label('Fecha de Certificación')

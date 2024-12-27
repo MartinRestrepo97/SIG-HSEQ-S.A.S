@@ -20,8 +20,7 @@ class ClientesRelationManager extends RelationManager
             ->schema([
                 Forms\Components\TextInput::make('nombre')
                     ->required(),
-                Forms\Components\TextInput::make('email')
-                    ->email()
+                Forms\Components\TextInput::make('cedula')
                     ->required(),
             ]);
     }
@@ -31,7 +30,7 @@ class ClientesRelationManager extends RelationManager
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('nombre'),
-                Tables\Columns\TextColumn::make('email'),
+                Tables\Columns\TextColumn::make('cedula'),
             ])
             ->filters([
                 //
