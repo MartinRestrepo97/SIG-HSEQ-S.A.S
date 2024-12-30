@@ -13,10 +13,14 @@ return new class extends Migration
     {
         Schema::create('certificados_clientes', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('cliente_id')->constrained()->onDelete('cascade');
-            $table->foreignId('certificado_id')->constrained()->onDelete('cascade');
+            $table->foreignId('clientes_id')->constrained('clientes')->onDelete('cascade');
+            $table->foreignId('certificados_id')->constrained('certificados')->onDelete('cascade');
             $table->date('fecha_certificacion')->nullable(); // Campo adicional
             $table->timestamps();
+
+            // Índices para mejorar el rendimiento de las consultas
+            $table->index('clientes_id');
+            $table->index('certificados_id');
         });
     }
 

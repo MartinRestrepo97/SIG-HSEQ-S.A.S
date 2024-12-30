@@ -1,25 +1,19 @@
 <?php
 
-namespace App\Filament\Resources;
+namespace App\Filament\Resources\ClientesResource\RelationManagers;
 
-use App\Filament\Resources\CertificadosResource\Pages;
-use App\Filament\Resources\CertificadosResource\RelationManagers;
-use App\Models\Certificados;
 use Filament\Forms;
 use Filament\Forms\Form;
-use Filament\Resources\Resource;
+use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class CertificadosResource extends Resource
+class CertificadosRelationManager extends RelationManager
 {
-    protected static ?string $model = Certificados::class;
+    protected static string $relationship = 'certificados';
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-
-    public static function form(Form $form): Form
+    public function form(Form $form): Form
     {
         return $form
             ->schema([
@@ -44,10 +38,12 @@ class CertificadosResource extends Resource
                     ->directory('certificados_pdf') // Directorio donde se guardarán los PDFs
                     ->preserveFilenames() // Preservar el nombre original del archivo
                     ->acceptedFileTypes(['application/pdf']), // Aceptar solo archivos PDF
+                Forms\Components\DatePicker::make('pivot.fecha_certificacion')
+                    ->label('Fecha de Certificación'),
             ]);
     }
 
-    public static function table(Table $table): Table
+    public function table(Table $table): Table
     {
         return $table
             ->columns([
@@ -59,33 +55,32 @@ class CertificadosResource extends Resource
                 Tables\Columns\TextColumn::make('documento_pdf')
                     ->label('PDF')
                     ->searchable(),
+                Tables\Columns\TextColumn::make('pivot.fecha_certificacion')
+                    ->label('Fecha de Certificación')
+                    ->date(),
             ])
             ->filters([
                 //
             ])
+            ->headerActions([
+                Tables\Actions\CreateAction::make(),
+                Tables\Actions\AttachAction::make()
+                    ->form(fn (Tables\Actions\AttachAction $action): array => [
+                        $action->getRecordSelect(),
+                        Forms\Components\DatePicker::make('fecha_certificacion')
+                            ->label('Fecha de Certificación'),
+                    ]),
+            ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DetachAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
+                    Tables\Actions\DetachBulkAction::make(),
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
-    }
-
-    public static function getRelations(): array
-    {
-        return [
-            RelationManagers\ClientesRelationManager::class,
-        ];
-    }
-
-    public static function getPages(): array
-    {
-        return [
-            'index' => Pages\ListCertificados::route('/'),
-            'create' => Pages\CreateCertificados::route('/create'),
-            'edit' => Pages\EditCertificados::route('/{record}/edit'),
-        ];
     }
 }
