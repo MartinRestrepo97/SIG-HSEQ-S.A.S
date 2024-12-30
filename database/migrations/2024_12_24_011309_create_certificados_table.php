@@ -13,10 +13,11 @@ return new class extends Migration
     {
         Schema::create('certificados', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre'); // Nombre del curso o certificado
-            $table->text('cedula');
-            $table->string('codigo');
-            $table->text('descripcion')->nullable();
+            $table->string('curso')->unique(); // Número de certificado
+            $table->date('fecha_emision'); // Fecha de emisión
+            $table->date('fecha_expiracion'); // Fecha de expiración
+            $table->string('norma_cumplida'); // Norma cumplida
+            $table->string('estado')->default('Active'); // Estado (Activo/Vencido)
             $table->string('documento_pdf')->nullable(); // Campo para almacenar la ruta del PDF
             $table->timestamps();
         });

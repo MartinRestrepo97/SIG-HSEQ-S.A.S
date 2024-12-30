@@ -10,10 +10,11 @@ class Certificados extends Model
     use HasFactory;
 
     protected $fillable = [
-        'nombre',
-        'cedula',
-        'codigo', 
-        'descripcion',
+        'curso',
+        'fecha_emision',
+        'fecha_expiracion', 
+        'norma_cumplida',
+        'estado',
         'documento_pdf'
     ];
 
