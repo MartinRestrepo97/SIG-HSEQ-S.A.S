@@ -35,4 +35,10 @@ class ClientesController extends Controller
         Clientes::destroy($id);
         return response()->noContent();
     }
+
+    public function testMartin($id)
+    {
+      $auxTest = ["ssss", "ssfdsfsdf"];
+      return $auxTest;
+    }
 }
