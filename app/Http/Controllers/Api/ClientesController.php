@@ -4,43 +4,41 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Clientes;
-use App\Models\Certificados;
 use Illuminate\Http\Request;
 
-class CertificadosController extends Controller
+class ClientesController extends Controller
 {
     public function index()
     {
-        return Certificados::all();
+        return Clientes::all();
     }
 
     public function store(Request $request)
     {
-        return Certificados::create($request->all());
+        return Clientes::create($request->all());
     }
 
     public function show($id)
     {
-        return Certificados::findOrFail($id);
+        return Clientes::findOrFail($id);
     }
 
     public function update(Request $request, $id)
     {
-        $certificado = Certificados::findOrFail($id);
+        $certificado = Clientes::findOrFail($id);
         $certificado->update($request->all());
         return $certificado;
     }
 
     public function destroy($id)
     {
-        Certificados::destroy($id);
+        Clientes::destroy($id);
         return response()->noContent();
     }
 
-    public function testMartin($documentoCliente)
+    public function testMartin($id)
     {
       $auxTest = ["ssss", "ssfdsfsdf"];
-      return Clientes::where('cedula', $documentoCliente)->firstOrFail();
-      // return $auxTest;
+      return $auxTest;
     }
 }

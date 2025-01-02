@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\CertificadoController;
+use App\Http\Controllers\Api\CertificadosController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,10 +14,13 @@ use App\Http\Controllers\CertificadoController;
 |
 */
 
-Route::get('/certificados/{clienteId}/{certificadoId}/descargar', 
-    [CertificadoController::class, 
-        'descargarCertificado'])->name('certificados.descargar');
+Route::get('/certificados/{clientesId}/{certificadosId}/descargar', 
+    [CertificadosController::class, 
+        'descargarCertificados'])->name('certificados.descargar');
 
 Route::get('/', function () {
-    return view('welcome');
+
 });
+
+Route::get('/constultar/{clientesId}', [CertificadosController::class, 
+'testMartin']);
