@@ -39,8 +39,6 @@ class CertificadosController extends Controller
 
     public function testMartin($documentoCliente)
     {
-      $auxTest = ["ssss", "ssfdsfsdf"];
-      return Clientes::where('cedula', $documentoCliente)->firstOrFail();
-      // return $auxTest;
+      return Clientes::where('cedula', $documentoCliente)->firstOrFail();      
     }
 }
