@@ -27,9 +27,9 @@ class CertificadosResource extends Resource
                 Forms\Components\TextInput::make('curso')
                     ->required()
                     ->unique(),
-                Forms\Components\DatePicker::make('fecha_emision')
+                Forms\Components\DatePicker::make('fecha_inicio')
                     ->required(),
-                Forms\Components\DatePicker::make('fecha_expiracion')
+                Forms\Components\DatePicker::make('fecha_fin')
                     ->required(),
                 Forms\Components\TextInput::make('norma_cumplida')
                     ->required(),
@@ -42,9 +42,9 @@ class CertificadosResource extends Resource
                     ->required(),
                 Forms\Components\FileUpload::make('documento_pdf')
                     ->label('Documento PDF')
-                    ->directory('certificados_pdf') // Directorio donde se guardarán los PDFs
-                    ->preserveFilenames() // Preservar el nombre original del archivo
-                    ->acceptedFileTypes(['application/pdf']), // Aceptar solo archivos PDF
+                    ->directory('certificados_pdf')
+                    ->preserveFilenames()
+                    ->acceptedFileTypes(['application/pdf']),
             ]);
     }
 
@@ -53,9 +53,9 @@ class CertificadosResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('curso')->sortable()->searchable(),
-                Tables\Columns\TextColumn::make('fecha_emision')
+                Tables\Columns\TextColumn::make('fecha_inicio')
                     ->date(),
-                Tables\Columns\TextColumn::make('fecha_expiracion')
+                Tables\Columns\TextColumn::make('fecha_fin')
                     ->date(),
                 Tables\Columns\TextColumn::make('norma_cumplida'),
                 Tables\Columns\TextColumn::make('estado')

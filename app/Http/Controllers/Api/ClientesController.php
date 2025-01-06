@@ -10,7 +10,7 @@ class ClientesController extends Controller
 {
     public function index()
     {
-        return Clientes::all();
+        return Clientes::all(); 
     }
 
     public function store(Request $request)
@@ -20,14 +20,14 @@ class ClientesController extends Controller
 
     public function show($id)
     {
-        return Clientes::findOrFail($id);
+        return Clientes::with('certificados')->findOrFail($id);
     }
 
     public function update(Request $request, $id)
     {
-        $certificado = Clientes::findOrFail($id);
-        $certificado->update($request->all());
-        return $certificado;
+        $cliente = Clientes::findOrFail($id);
+        $cliente->update($request->all());
+        return $cliente;
     }
 
     public function destroy($id)
@@ -36,9 +36,4 @@ class ClientesController extends Controller
         return response()->noContent();
     }
 
-    public function testMartin($id)
-    {
-      $auxTest = ["ssss", "ssfdsfsdf"];
-      return $auxTest;
-    }
 }

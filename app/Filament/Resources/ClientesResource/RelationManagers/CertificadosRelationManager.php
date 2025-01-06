@@ -20,26 +20,24 @@ class CertificadosRelationManager extends RelationManager
                 Forms\Components\TextInput::make('curso')
                     ->required()
                     ->unique(),
-                Forms\Components\DatePicker::make('fecha_emision')
+                Forms\Components\DatePicker::make('fecha_inicio')
                     ->required(),
-                Forms\Components\DatePicker::make('fecha_expiracion')
+                Forms\Components\DatePicker::make('fecha_fin')
                     ->required(),
                 Forms\Components\TextInput::make('norma_cumplida')
                     ->required(),
                 Forms\Components\Select::make('estado')
                     ->options([
-                        'Active' => 'Activo',
-                        'Expired' => 'Vencido',
+                        'Activo' => 'Activo',
+                        'Vencido' => 'Vencido',
                     ])
-                    ->default('Active')
+                    ->default('Activo')
                     ->required(),
                 Forms\Components\FileUpload::make('documento_pdf')
                     ->label('Documento PDF')
-                    ->directory('certificados_pdf') // Directorio donde se guardarán los PDFs
-                    ->preserveFilenames() // Preservar el nombre original del archivo
-                    ->acceptedFileTypes(['application/pdf']), // Aceptar solo archivos PDF
-                Forms\Components\DatePicker::make('pivot.fecha_certificacion')
-                    ->label('Fecha de Certificación'),
+                    ->directory('certificados_pdf')
+                    ->preserveFilenames()
+                    ->acceptedFileTypes(['application/pdf']),
             ]);
     }
 
@@ -48,16 +46,15 @@ class CertificadosRelationManager extends RelationManager
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('curso')->sortable()->searchable(),
-                Tables\Columns\TextColumn::make('fecha_emision')->date(),
-                Tables\Columns\TextColumn::make('fecha_expiracion')->date(),
+                Tables\Columns\TextColumn::make('fecha_inicio')->date(),
+                Tables\Columns\TextColumn::make('fecha_fin')->date(),
                 Tables\Columns\TextColumn::make('norma_cumplida'),
-                Tables\Columns\TextColumn::make('estado'),
+                Tables\Columns\TextColumn::make('estado')
+                    ->icon(fn ($state) => $state === 'Activo' ? 'heroicon-o-check-circle' : 'heroicon-o-x-circle')
+                    ->color(fn ($state) => $state === 'Activo' ? 'success' : 'danger'),
                 Tables\Columns\TextColumn::make('documento_pdf')
                     ->label('PDF')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('pivot.fecha_certificacion')
-                    ->label('Fecha de Certificación')
-                    ->date(),
             ])
             ->filters([
                 //
@@ -73,12 +70,9 @@ class CertificadosRelationManager extends RelationManager
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\DetachAction::make(),
-                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DetachBulkAction::make(),
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
