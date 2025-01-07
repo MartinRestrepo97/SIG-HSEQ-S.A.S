@@ -86,40 +86,6 @@ class ClientesResource extends Resource
             ]);
     }
 
-    public function getClienteByCedula($cedula)
-    {
-        // Buscamos al cliente por la cédula,
-        // y a la vez cargamos la relación con los certificados
-        $cliente = Clientes::where('cedula', $cedula)
-            ->with(['certificadosCliente.certificado'])
-            ->first();
-
-        // Si no se encuentra el cliente, retornamos algún tipo de respuesta
-        if (!$cliente) {
-            return response()->json([
-                'message' => 'Cliente no encontrado'
-            ], 404);
-        }
-
-        // Retornamos la información del cliente y sus certificados
-        return response()->json([
-            'cliente'     => $cliente,
-            'certificados' => $cliente->certificadosCliente->map(function($pivot) {
-                return [
-                    'certificado_id'        => $pivot->certificado_id,
-                    'curso'                 => $pivot->certificado->curso,
-                    'fecha_inicio'          => $pivot->certificado->fecha_inicio,
-                    'fecha_fin'             => $pivot->certificado->fecha_fin,
-                    'norma_cumplida'        => $pivot->certificado->norma_cumplida,
-                    'estado'                => $pivot->certificado->estado,
-                    'documento_pdf'         => $pivot->certificado->documento_pdf,
-                    'fecha_inicio_validez'  => $pivot->fecha_inicio_validez,
-                    'fecha_fin_validez'     => $pivot->fecha_fin_validez,
-                ];
-            })
-        ], 200);
-    }
-
     public static function getRelations(): array
     {
         return [

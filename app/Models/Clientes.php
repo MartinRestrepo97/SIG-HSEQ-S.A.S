@@ -21,21 +21,20 @@ class Clientes extends Model
         'codigo'
     ];
 
+    
+
     /**
-     * Un cliente puede tener varios certificados asignados
-     * a través de la tabla pivote certificado_cliente.
+     * Relación con la tabla pivote certificados_clientes.
      */
+    /* public function certificadosCliente()
+    {
+        return $this->hasMany(CertificadosClientes::class, 'clientes_id');
+    }*/
+
     public function certificados()
     {
         return $this->belongsToMany(Certificados::class, 'certificados_clientes', 'clientes_id', 'certificados_id')
                     ->withPivot('fecha_inicio_validez', 'fecha_fin_validez');
     }
-
-    /**
-     * Relación con la tabla pivote certificados_clientes.
-     */
-    public function certificadosCliente()
-    {
-        return $this->hasMany(CertificadosClientes::class, 'clientes_id');
-    }
+    
 }

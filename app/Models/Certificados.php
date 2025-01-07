@@ -21,15 +21,7 @@ class Certificados extends Model
         'documento_pdf'
     ];
     
-    /**
-     * Un certificado puede estar asociado a varios clientes
-     * a través de la tabla pivote certificados_clientes.
-     */
-    public function clientes()
-    {
-        return $this->belongsToMany(Clientes::class, 'certificados_clientes', 'certificados_id', 'clientes_id')
-                    ->withPivot('fecha_inicio_validez', 'fecha_fin_validez');
-    }
+
 
      /**
      * Un certificado puede aparecer múltiples veces

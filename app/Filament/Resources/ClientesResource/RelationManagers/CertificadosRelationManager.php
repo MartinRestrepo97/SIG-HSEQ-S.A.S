@@ -8,6 +8,9 @@ use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Filament\Forms\Components\Select;
+use App\Models\Certificados;
+
 
 class CertificadosRelationManager extends RelationManager
 {
@@ -17,9 +20,10 @@ class CertificadosRelationManager extends RelationManager
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('curso')
-                    ->required()
-                    ->unique(),
+                Forms\Components\Select::make('certificado_id')
+                    ->label('curso') 
+                    ->options(Certificados::all()->pluck('curso','id'))
+                    ->required(),
                 Forms\Components\DatePicker::make('fecha_inicio')
                     ->required(),
                 Forms\Components\DatePicker::make('fecha_fin')
@@ -46,6 +50,7 @@ class CertificadosRelationManager extends RelationManager
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('curso')->sortable()->searchable(),
+
                 Tables\Columns\TextColumn::make('fecha_inicio')->date(),
                 Tables\Columns\TextColumn::make('fecha_fin')->date(),
                 Tables\Columns\TextColumn::make('norma_cumplida'),

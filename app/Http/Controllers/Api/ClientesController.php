@@ -36,4 +36,37 @@ class ClientesController extends Controller
         return response()->noContent();
     }
 
+    public function getClienteByCedula($cedula)
+    {
+        // Buscamos al cliente por la cédula y cargamos los certificados directamente
+        $cliente = Clientes::where('cedula', $cedula)
+            ->with('certificados')
+            ->first();
+
+        // Si no se encuentra el cliente, retornamos un error
+        if (!$cliente) {
+            return response()->json([
+                'message' => 'Cliente no encontrado'
+            ], 404);
+        }
+
+        // Retornamos la información del cliente y sus certificados
+        return response()->json([
+            'cliente' => $cliente,
+            'certificados' => $cliente->certificados->map(function ($certificado) {
+                return [
+                    'certificado_id' => $certificado->id,
+                    'curso' => $certificado->curso,
+                    'fecha_emision' => $certificado->fecha_emision,
+                    'fecha_expiracion' => $certificado->fecha_expiracion,
+                    'norma_cumplida' => $certificado->norma_cumplida,
+                    'estado' => $certificado->estado,
+                    'documento_pdf' => $certificado->documento_pdf,
+                    'fecha_inicio_validez' => $certificado->pivot->fecha_inicio_validez,
+                    'fecha_fin_validez' => $certificado->pivot->fecha_fin_validez,
+                ];
+            })
+        ], 200);
+    }
+
 }
