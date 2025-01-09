@@ -32,7 +32,7 @@ class ClientesResource extends Resource
                 Forms\Components\TextInput::make('cedula')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('email')
+                Forms\Components\TextInput::make('correo')
                     ->email()
                     ->required()
                     ->unique(ignoreRecord: true)
@@ -57,7 +57,7 @@ class ClientesResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('cedula')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('email')
+                Tables\Columns\TextColumn::make('correo')
                     ->sortable()   
                     ->searchable(),
                 Tables\Columns\TextColumn::make('telefono')

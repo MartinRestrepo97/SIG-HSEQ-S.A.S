@@ -33,7 +33,7 @@ class EditClientes extends EditRecord
                         TextInput::make('cedula')
                             ->required()
                             ->maxLength(255),
-                        TextInput::make('email')
+                        TextInput::make('correo')
                             ->required()
                             ->maxLength(255),
                         TextInput::make('telefono')

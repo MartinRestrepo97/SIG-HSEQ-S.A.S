@@ -10,7 +10,7 @@ class ClientesController extends Controller
 {
     public function index()
     {
-        return Clientes::all();
+        return Clientes::all(); 
     }
 
     public function store(Request $request)
@@ -20,14 +20,14 @@ class ClientesController extends Controller
 
     public function show($id)
     {
-        return Clientes::findOrFail($id);
+        return Clientes::with('certificados')->findOrFail($id);
     }
 
     public function update(Request $request, $id)
     {
-        $certificado = Clientes::findOrFail($id);
-        $certificado->update($request->all());
-        return $certificado;
+        $cliente = Clientes::findOrFail($id);
+        $cliente->update($request->all());
+        return $cliente;
     }
 
     public function destroy($id)
@@ -36,9 +36,37 @@ class ClientesController extends Controller
         return response()->noContent();
     }
 
-    public function testMartin($id)
+    public function getClienteByCedula($cedula)
     {
-      $auxTest = ["ssss", "ssfdsfsdf"];
-      return $auxTest;
+        // Buscamos al cliente por la cédula y cargamos los certificados directamente
+        $cliente = Clientes::where('cedula', $cedula)
+            ->with('certificados')
+            ->first();
+
+        // Si no se encuentra el cliente, retornamos un error
+        if (!$cliente) {
+            return response()->json([
+                'message' => 'Cliente no encontrado'
+            ], 404);
+        }
+
+        // Retornamos la información del cliente y sus certificados
+        return response()->json([
+            'cliente' => $cliente,
+            'certificados' => $cliente->certificados->map(function ($certificado) {
+                return [
+                    'certificado_id' => $certificado->id,
+                    'curso' => $certificados->curso,
+                    'fecha_inicio' => $certificados->fecha_inicio,
+                    'fecha_fin' => $certificados->fecha_fin,
+                    'norma_cumplida' => $certificados->norma_cumplida,
+                    'estado' => $certificados->estado,
+                    'documento_pdf' => $certificados->documento_pdf,
+                    'fecha_inicio_validez' => $certificados->pivot->fecha_inicio_validez,
+                    'fecha_fin_validez' => $certificados->pivot->fecha_fin_validez,
+                ];
+            })
+        ], 200);
     }
+
 }

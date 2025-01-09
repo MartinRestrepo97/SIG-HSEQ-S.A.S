@@ -8,6 +8,12 @@ use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\DatePicker;
+use App\Models\Certificados;
+
 
 class CertificadosRelationManager extends RelationManager
 {
@@ -17,29 +23,27 @@ class CertificadosRelationManager extends RelationManager
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('curso')
-                    ->required()
-                    ->unique(),
-                Forms\Components\DatePicker::make('fecha_emision')
+                Forms\Components\Select::make('curso')
+                    ->options(Certificados::all()->pluck('curso','id'))
                     ->required(),
-                Forms\Components\DatePicker::make('fecha_expiracion')
+                Forms\Components\DatePicker::make('fecha_inicio')
+                    ->required(),
+                Forms\Components\DatePicker::make('fecha_fin')
                     ->required(),
                 Forms\Components\TextInput::make('norma_cumplida')
                     ->required(),
                 Forms\Components\Select::make('estado')
                     ->options([
-                        'Active' => 'Activo',
-                        'Expired' => 'Vencido',
+                        'Activo' => 'Activo',
+                        'Vencido' => 'Vencido',
                     ])
-                    ->default('Active')
+                    ->default('Activo')
                     ->required(),
                 Forms\Components\FileUpload::make('documento_pdf')
                     ->label('Documento PDF')
-                    ->directory('certificados_pdf') // Directorio donde se guardarán los PDFs
-                    ->preserveFilenames() // Preservar el nombre original del archivo
-                    ->acceptedFileTypes(['application/pdf']), // Aceptar solo archivos PDF
-                Forms\Components\DatePicker::make('pivot.fecha_certificacion')
-                    ->label('Fecha de Certificación'),
+                    ->directory('certificados_pdf')
+                    ->preserveFilenames()
+                    ->acceptedFileTypes(['application/pdf']),
             ]);
     }
 
@@ -48,16 +52,15 @@ class CertificadosRelationManager extends RelationManager
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('curso')->sortable()->searchable(),
-                Tables\Columns\TextColumn::make('fecha_emision')->date(),
-                Tables\Columns\TextColumn::make('fecha_expiracion')->date(),
+                Tables\Columns\TextColumn::make('fecha_inicio')->date(),
+                Tables\Columns\TextColumn::make('fecha_fin')->date(),
                 Tables\Columns\TextColumn::make('norma_cumplida'),
-                Tables\Columns\TextColumn::make('estado'),
+                Tables\Columns\TextColumn::make('estado')
+                    ->icon(fn ($state) => $state === 'Activo' ? 'heroicon-o-check-circle' : 'heroicon-o-x-circle')
+                    ->color(fn ($state) => $state === 'Activo' ? 'success' : 'danger'),
                 Tables\Columns\TextColumn::make('documento_pdf')
                     ->label('PDF')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('pivot.fecha_certificacion')
-                    ->label('Fecha de Certificación')
-                    ->date(),
             ])
             ->filters([
                 //
@@ -67,18 +70,47 @@ class CertificadosRelationManager extends RelationManager
                 Tables\Actions\AttachAction::make()
                     ->form(fn (Tables\Actions\AttachAction $action): array => [
                         $action->getRecordSelect(),
-                        Forms\Components\DatePicker::make('fecha_certificacion')
-                            ->label('Fecha de Certificación'),
+                        Forms\Components\DatePicker::make('fecha_inicio_validez')
+                            ->label('Fecha Inicio Validez'),
+                        Forms\Components\DatePicker::make('fecha_fin_validez')
+                            ->label('Fecha Fin Validez'),
                     ]),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DetachAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\EditAction::make()
+                    ->form([
+                        Forms\Components\Grid::make(2)
+                            ->schema([
+                                Forms\Components\Select::make('curso')
+                                    ->options(Certificados::all()->pluck('curso','id'))
+                                    ->required(),
+                                Forms\Components\DatePicker::make('fecha_inicio')
+                                    ->required(),
+                                Forms\Components\DatePicker::make('fecha_fin')
+                                    ->required(),
+                                Forms\Components\TextInput::make('norma_cumplida')
+                                    ->required(),
+                                Forms\Components\Select::make('estado')
+                                    ->options([
+                                        'Activo' => 'Activo',
+                                        'Vencido' => 'Vencido',
+                                    ])
+                                    ->default('Activo')
+                                    ->required(),
+                                Forms\Components\FileUpload::make('documento_pdf')
+                                    ->label('Documento PDF')
+                                    ->directory('certificados_pdf')
+                                    ->preserveFilenames()
+                                    ->acceptedFileTypes(['application/pdf']),
+                                Forms\Components\DatePicker::make('fecha_inicio_validez')
+                                    ->required(),
+                                Forms\Components\DatePicker::make('fecha_fin_validez')
+                                    ->required(),
+                            ])        
+                    ]),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DetachBulkAction::make(),
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);

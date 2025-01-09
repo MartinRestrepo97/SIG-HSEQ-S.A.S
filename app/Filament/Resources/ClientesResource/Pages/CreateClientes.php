@@ -36,7 +36,7 @@ class CreateClientes extends CreateRecord
                         TextInput::make('cedula')
                             ->required()
                             ->maxLength(255),
-                        TextInput::make('email')
+                        TextInput::make('correo')
                             ->required()
                             ->maxLength(255),
                         TextInput::make('telefono')
