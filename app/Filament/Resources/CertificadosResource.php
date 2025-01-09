@@ -52,7 +52,9 @@ class CertificadosResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('curso')->sortable()->searchable(),
+                Tables\Columns\TextColumn::make('curso')
+                    ->sortable()
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('fecha_inicio')
                     ->date(),
                 Tables\Columns\TextColumn::make('fecha_fin')

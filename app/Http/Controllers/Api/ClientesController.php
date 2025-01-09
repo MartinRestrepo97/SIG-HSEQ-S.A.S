@@ -56,14 +56,14 @@ class ClientesController extends Controller
             'certificados' => $cliente->certificados->map(function ($certificado) {
                 return [
                     'certificado_id' => $certificado->id,
-                    'curso' => $certificado->curso,
-                    'fecha_emision' => $certificado->fecha_emision,
-                    'fecha_expiracion' => $certificado->fecha_expiracion,
-                    'norma_cumplida' => $certificado->norma_cumplida,
-                    'estado' => $certificado->estado,
-                    'documento_pdf' => $certificado->documento_pdf,
-                    'fecha_inicio_validez' => $certificado->pivot->fecha_inicio_validez,
-                    'fecha_fin_validez' => $certificado->pivot->fecha_fin_validez,
+                    'curso' => $certificados->curso,
+                    'fecha_inicio' => $certificados->fecha_inicio,
+                    'fecha_fin' => $certificados->fecha_fin,
+                    'norma_cumplida' => $certificados->norma_cumplida,
+                    'estado' => $certificados->estado,
+                    'documento_pdf' => $certificados->documento_pdf,
+                    'fecha_inicio_validez' => $certificados->pivot->fecha_inicio_validez,
+                    'fecha_fin_validez' => $certificados->pivot->fecha_fin_validez,
                 ];
             })
         ], 200);

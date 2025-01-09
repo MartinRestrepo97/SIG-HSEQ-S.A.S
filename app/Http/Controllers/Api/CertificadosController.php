@@ -59,8 +59,8 @@ class CertificadosController extends Controller
                 return [
                     'certificado_id'        => $pivot->certificado_id,
                     'curso'                 => $pivot->certificados->curso,
-                    'fecha_emision'         => $pivot->certificados->fecha_emision,
-                    'fecha_expiracion'      => $pivot->certificados->fecha_expiracion,
+                    'fecha_inicio'          => $pivot->certificados->fecha_inicio,
+                    'fecha_fin'             => $pivot->certificados->fecha_fin,
                     'norma_cumplida'        => $pivot->certificados->norma_cumplida,
                     'estado'                => $pivot->certificados->estado,
                     'documento_pdf'         => $pivot->certificados->documento_pdf,
