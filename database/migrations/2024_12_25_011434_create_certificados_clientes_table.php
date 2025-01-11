@@ -17,11 +17,12 @@ return new class extends Migration
             $table->unsignedBigInteger('certificados_id');
             $table->date('fecha_inicio_validez')->nullable();
             $table->date('fecha_fin_validez')->nullable();
+            $table->string('documento_pdf_validez')->nullable();
             $table->timestamps();
 
             // Claves foráneas
-            $table->foreign('clientes_id')->references('id')->on('clientes')->onDelete('cascade');
-            $table->foreign('certificados_id')->references('id')->on('certificados')->onDelete('cascade');
+            $table->foreignId('clientes_id')->references('id')->on('clientes')->onDelete('cascade');
+            $table->foreignId('certificados_id')->references('id')->on('certificados')->onDelete('cascade');
         });
     }
 

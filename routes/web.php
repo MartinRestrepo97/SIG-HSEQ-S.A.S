@@ -15,8 +15,7 @@ use App\Http\Controllers\Api\CertificadosController;
 */
 
 Route::get('/certificados/{clientesId}/{certificadosId}/descargar', 
-    [CertificadosController::class, 
-        'descargarCertificados'])->name('certificados.descargar');
+    [CertificadosController::class, 'descargarCertificados'])->name('certificados.descargar');
 
 Route::get('/', function () {
 

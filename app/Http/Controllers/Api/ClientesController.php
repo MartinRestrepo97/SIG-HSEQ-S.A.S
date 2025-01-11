@@ -64,6 +64,7 @@ class ClientesController extends Controller
                     'documento_pdf' => $certificados->documento_pdf,
                     'fecha_inicio_validez' => $certificados->pivot->fecha_inicio_validez,
                     'fecha_fin_validez' => $certificados->pivot->fecha_fin_validez,
+                    'documento_pdf_validez' => $certificados->pivot->documento_pdf_validez,
                 ];
             })
         ], 200);

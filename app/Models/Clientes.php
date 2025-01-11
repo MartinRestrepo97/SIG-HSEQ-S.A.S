@@ -18,7 +18,7 @@ class Clientes extends Model
         'cedula', 
         'correo', 
         'telefono', 
-        'codigo'
+        'codigo',
     ];
 
     
@@ -34,7 +34,7 @@ class Clientes extends Model
     public function certificados()
     {
         return $this->belongsToMany(Certificados::class, 'certificados_clientes', 'clientes_id', 'certificados_id')
-                    ->withPivot('fecha_inicio_validez', 'fecha_fin_validez');
+                    ->withPivot('fecha_inicio_validez', 'fecha_fin_validez', 'documento_pdf_validez');
     }
     
 }
