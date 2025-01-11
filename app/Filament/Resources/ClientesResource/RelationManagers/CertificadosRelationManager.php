@@ -10,6 +10,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Forms\Components\Select;
 use App\Models\Certificados;
+use App\Models\CertificadosClientes;
 
 
 class CertificadosRelationManager extends RelationManager
@@ -20,7 +21,7 @@ class CertificadosRelationManager extends RelationManager
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('curso')
+                Forms\Components\Select::make('certificados_id')
                     ->options(Certificados::all()->pluck('curso','id'))
                     ->required(),
                 Forms\Components\DatePicker::make('fecha_inicio_validez')

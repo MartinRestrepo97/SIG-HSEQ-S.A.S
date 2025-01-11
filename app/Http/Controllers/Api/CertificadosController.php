@@ -75,22 +75,22 @@ class CertificadosController extends Controller
 
     public function descargarCertificados($clientesId, $certificadosId)
     {
-        // Buscar el certificado por su ID y asegurarse de que pertenece al cliente
-        $certificado = Certificados::where('id', $certificadosId)
-            ->whereHas('clientes', function($query) use ($clientesId) {
-                $query->where('clientes.id', $clientesId);
-            })
-            ->firstOrFail();
+        $certificado = Certificados::findOrFail($certificadosId);
 
-        // Obtener la ruta del archivo PDF
+        // Verifica que el certificado pertenezca al cliente
+        if ($certificado->cliente_id != $clientesId) {
+            return response()->json(['message' => 'Certificado no encontrado para este cliente'], 404);
+        }
+
+        // Ruta al archivo PDF
         $pathToFile = storage_path('app/' . $certificado->documento_pdf);
 
-        // Verificar si el archivo existe
+        // Verifica si el archivo existe
         if (!file_exists($pathToFile)) {
             return response()->json(['message' => 'Archivo no encontrado'], 404);
         }
 
-        // Descargar el archivo
+        // Devuelve el archivo como una respuesta de descarga
         return response()->download($pathToFile, 'certificado_' . $certificadosId . '.pdf');
     }
 }
