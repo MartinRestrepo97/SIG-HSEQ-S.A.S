@@ -67,6 +67,7 @@ class CertificadosController extends Controller
                     'fecha_inicio_validez'  => $pivot->fecha_inicio_validez,
                     'fecha_fin_validez'     => $pivot->fecha_fin_validez,
                     'documento_pdf_validez' => $pivot->documento_pdf_validez,
+                    'estado_validez'        => $pivot->estado_validez,
                 ];
             })
         ], 200);

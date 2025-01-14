@@ -13,16 +13,13 @@ return new class extends Migration
     {
         Schema::create('certificados_clientes', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('clientes_id');
-            $table->unsignedBigInteger('certificados_id');
+            $table->foreignId('clientes_id')->constrained('clientes')->onDelete('cascade');
+            $table->foreignId('certificados_id')->constrained('certificados')->onDelete('cascade');
+            $table->string('estado_validez')->default('Active');
             $table->date('fecha_inicio_validez')->nullable();
             $table->date('fecha_fin_validez')->nullable();
             $table->string('documento_pdf_validez')->nullable();
             $table->timestamps();
-
-            // Claves foráneas
-            $table->foreignId('clientes_id')->references('id')->on('clientes')->onDelete('cascade');
-            $table->foreignId('certificados_id')->references('id')->on('certificados')->onDelete('cascade');
         });
     }
 

@@ -24,6 +24,13 @@ class CertificadosRelationManager extends RelationManager
                 Forms\Components\Select::make('certificados_id')
                     ->options(Certificados::all()->pluck('curso','id'))
                     ->required(),
+                Forms\Components\Select::make('estado_validez')
+                    ->options([
+                        'Activo' => 'Activo',
+                        'Vencido' => 'Vencido',
+                    ])
+                    ->default('Activo')
+                    ->required(),
                 Forms\Components\DatePicker::make('fecha_inicio_validez')
                     ->required(),
                 Forms\Components\DatePicker::make('fecha_fin_validez')
@@ -43,6 +50,9 @@ class CertificadosRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('curso')
                     ->sortable()
                     ->searchable(),
+                Tables\Columns\TextColumn::make('estado_validez')
+                    ->icon(fn ($state) => $state === 'Activo' ? 'heroicon-o-check-circle' : 'heroicon-o-x-circle')
+                    ->color(fn ($state) => $state === 'Activo' ? 'success' : 'danger'),
                 Tables\Columns\TextColumn::make('fecha_inicio_validez')
                     ->date(),
                 Tables\Columns\TextColumn::make('fecha_fin_validez')
