@@ -17,6 +17,8 @@ class CertificadosClientes extends Model
         'certificados_id',
         'fecha_inicio_validez',
         'fecha_fin_validez',
+        'documento_pdf_validez',
+        'estado_validez',
     ];
 
     /**

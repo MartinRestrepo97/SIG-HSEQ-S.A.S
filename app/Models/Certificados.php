@@ -18,7 +18,7 @@ class Certificados extends Model
         'fecha_fin', 
         'norma_cumplida',
         'estado',
-        'documento_pdf'
+        'documento_pdf',
     ];
     
 
@@ -28,8 +28,7 @@ class Certificados extends Model
          */
     public function clientes()
     {
-        return $this->belongsToMany(Clientes::class, 'certificados_clientes', 'certificados_id', 'clientes_id')
-                    ->withPivot('fecha_inicio_validez', 'fecha_fin_validez');
+        return $this->belongsToMany(Clientes::class, 'clientes_id');
     }
 
      /**

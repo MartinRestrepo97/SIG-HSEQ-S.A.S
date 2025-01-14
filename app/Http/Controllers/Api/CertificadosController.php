@@ -66,9 +66,32 @@ class CertificadosController extends Controller
                     'documento_pdf'         => $pivot->certificados->documento_pdf,
                     'fecha_inicio_validez'  => $pivot->fecha_inicio_validez,
                     'fecha_fin_validez'     => $pivot->fecha_fin_validez,
+                    'documento_pdf_validez' => $pivot->documento_pdf_validez,
+                    'estado_validez'        => $pivot->estado_validez,
                 ];
             })
         ], 200);
       return Clientes::where('cedula', $documentoCliente)->firstOrFail();      
+    }
+
+    public function descargarCertificados($clientesId, $certificadosId)
+    {
+        $certificado = Certificados::findOrFail($certificadosId);
+
+        // Verifica que el certificado pertenezca al cliente
+        if ($certificado->cliente_id != $clientesId) {
+            return response()->json(['message' => 'Certificado no encontrado para este cliente'], 404);
+        }
+
+        // Ruta al archivo PDF
+        $pathToFile = storage_path('app/' . $certificado->documento_pdf);
+
+        // Verifica si el archivo existe
+        if (!file_exists($pathToFile)) {
+            return response()->json(['message' => 'Archivo no encontrado'], 404);
+        }
+
+        // Devuelve el archivo como una respuesta de descarga
+        return response()->download($pathToFile, 'certificado_' . $certificadosId . '.pdf');
     }
 }
