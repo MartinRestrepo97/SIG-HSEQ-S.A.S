@@ -15,3 +15,7 @@ Route::get('certificados/download/{id}', [CertificadosController::class, 'downlo
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+
+Route::get('/constultar/{clientesId}', [CertificadosController::class, 
+'testMartin']);
