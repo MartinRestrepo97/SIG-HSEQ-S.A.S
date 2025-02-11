@@ -24,7 +24,7 @@ class CertificadosClientes extends Model
     /**
      * Relación con el modelo Clientes
      */
-    public function clientes()
+    public function cliente()
     {
         return $this->belongsTo(Clientes::class, 'clientes_id');
     }

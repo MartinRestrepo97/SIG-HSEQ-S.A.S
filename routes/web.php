@@ -7,7 +7,7 @@ use App\Http\Controllers\Api\ClientesController;
 Route::get(
         '/descargar-certificado-cliente/{id}',
         [ClientesController::class, 'donwloadCertificadoCliente']
-    )->name('clientes.donwloadCertificadoCliente');
+    );
 
 Route::get('/', function () {
     // Otras rutas

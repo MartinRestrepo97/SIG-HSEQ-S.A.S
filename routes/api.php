@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\CertificadosController;
+use App\Http\Controllers\Api\ClientesController;
 
 Route::get('/certificados', [CertificadosController::class, 'index']);
 
@@ -19,3 +20,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('/constultar/{clientesId}', [CertificadosController::class, 
 'testMartin']);
+
+Route::get(
+    '/descargar-certificado-cliente/{id}',
+    [ClientesController::class, 'donwloadCertificadoCliente']
+);

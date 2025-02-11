@@ -48,7 +48,7 @@ class ClientesController extends Controller
         // echo $auxAsset2;
 
         $archivoPdf = public_path('storage/' . $certificado->documento_pdf_validez);
-        echo $archivoPdf;
+    
         if (!file_exists($archivoPdf)) {            
             echo "no existe";
             // abort(404, 'El archivo no se encuentra disponible eeeeeeee.');
