@@ -13,6 +13,7 @@ class Certificados extends Model
     protected $table = 'certificados';
 
     protected $fillable = [
+        'imagen',
         'curso',
         'fecha_inicio',
         'fecha_fin', 

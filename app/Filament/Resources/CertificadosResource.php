@@ -24,6 +24,12 @@ class CertificadosResource extends Resource
     {
         return $form
             ->schema([
+                Forms\Components\FileUpload::make('imagen')
+                    ->label('Imagen del Certificado')
+                    ->directory('certificados_imagenes')
+                    ->image()
+                    ->preserveFilenames()
+                    ->required(),
                 Forms\Components\TextInput::make('curso')
                     ->required()
                     ->unique(),
@@ -52,6 +58,9 @@ class CertificadosResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\ImageColumn::make('imagen')
+                    ->label('Imagen')
+                    ->circular(),
                 Tables\Columns\TextColumn::make('curso')
                     ->sortable()
                     ->searchable(),
